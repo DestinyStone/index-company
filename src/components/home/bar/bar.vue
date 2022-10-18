@@ -1,5 +1,5 @@
 <template>
-  <div class="bar" style="display: flex; justify-content: center; height: 60px; line-height: 60px; text-align: center;">
+  <div class="bar" style="display: flex; justify-content: center; height: 80px; line-height: 80px; text-align: center;">
     <div style="width: 80%;">
       <el-row style="width: 100%">
         <el-col :span="5" class="center">
@@ -8,7 +8,9 @@
           </div>
         </el-col>
         <el-col :span="14" class="center">
-          <slot name="content"/>
+          <div style="min-width: 1200px;">
+            <slot name="content"/>
+          </div>
         </el-col>
         <el-col :span="5" class="center">
           <slot name="phone"/>

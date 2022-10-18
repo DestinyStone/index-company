@@ -1,16 +1,21 @@
 <template>
   <div class="bar-title-select">
-    <div v-for="(item, index) in data" ref="item" :key="'bar' + index" class="item" :class="{'select-item': activeIndex === index}" @mouseenter="handlerMouseEnterItem(item, index)">
+    <div v-for="(item, index) in data" ref="item"
+         :key="'bar' + index" class="item"
+         :class="{'select-item': activeIndex === index}"
+         @click.stop="handlerClick(item)"
+         @mouseenter="handlerMouseEnterItem(item, index)">
       {{item.title}}
       <div class="item-children"
            :style="{
            'height': activeIndex === index ? childrenItemHeight * (item.children || []).length + 'px' : '0',
-           'left': -(item.left - 80  || 0) + 'px'
+           'left': (item.left || 0) + 'px',
            }">
         <div ref="item-children"
              :key="'bar-item' + childrenIndex"
              v-for="(childrenItem, childrenIndex) in (item.children || [])"
              :class="{'item-children-active': activeIndex === index && childrenIndex === activeItemIndex}"
+             @click.stop="handlerClick(item, childrenItem)"
              @mouseenter.stop="handlerMouseEnterChildrenItem(childrenItem, childrenIndex)">
           <div>
             <div style="width: 3px; background: #409EFF"></div>
@@ -25,53 +30,19 @@
 <script>
   export default {
     name: "barTitleSelect",
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return []
+        }
+      }
+    },
     data() {
       return {
         activeIndex: -1,
         activeItemIndex: -1,
-        data: [
-          {
-            title: "首页",
-            children: [],
-          },
-          {
-            title: "产品",
-            children: [
-              {
-                title: "社区版"
-              },
-              {
-                title: "企业版本"
-              },
-            ]
-          },
-          {
-            title: "解决方案",
-            children: [
-              {
-                title: "物联网解决方案111111111111"
-              },
-              {
-                title: "物联网解决方案"
-              },
-            ]
-          },
-          {
-            title: "关于我们",
-            children: [
-              {
-                title: "企业介绍"
-              },
-              {
-                title: "企业介绍"
-              },
-            ]
-          },
-          {
-            title: "文档",
-            children: [],
-          }
-        ],
+
         childrenItemHeight: 0,
       }
     },
@@ -79,6 +50,9 @@
       this.getChildrenItemHeight();
     },
     methods: {
+      handlerClick(parent, children) {
+        this.$emit("change", {parent, children});
+      },
       handlermouseOver() {
         this.activeIndex = -1;
         this.activeItemIndex = -1;
@@ -87,7 +61,10 @@
         this.activeIndex = index;
         this.activeItemIndex = -1;
         if (!item.left && item.children && item.children.length !== 0) {
-          item.left = this.$refs['item'][index].getElementsByClassName("item-children")[0].offsetWidth / 2;
+          let parent = this.$refs['item'][index];
+          let children = parent.getElementsByClassName("item-children")[0];
+          item.left = (parent.offsetWidth - children.offsetWidth) / 2;
+          console.log(item.left);
         }
       },
       handlerMouseEnterChildrenItem(item, index) {
@@ -97,10 +74,6 @@
         let item = this.$refs['item-children'] && this.$refs['item-children'][0] || {};
         this.childrenItemHeight = item.offsetHeight;
       },
-      getChildrenItemLeftPos(event) {
-        console.log(event);
-        return "10px"
-      }
     }
   }
 </script>
@@ -111,11 +84,12 @@
     text-align: center;
   }
   .bar-title-select .item {
-    padding: 0 30px;
+    padding: 0 50px;
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     position: relative;
+    z-index: 999;
   }
   .bar-title-select .select-item {
     color: #409EFF;
@@ -123,6 +97,7 @@
   .bar-title-select .item-children {
     position: absolute;
     height: 0;
+    z-index: 999;
     width: unset;
     max-width: unset;
     max-height: 300px;
@@ -133,9 +108,9 @@
     height: 300px;
   }
   .bar-title-select .item-children > div {
-    height: 35px;
-    padding: 0 10px;
-    line-height: 35px;
+    height: 40px;
+    padding: 0 15px;
+    line-height: 40px;
     font-size: 15px;
     font-weight: 300;
     white-space:nowrap;
