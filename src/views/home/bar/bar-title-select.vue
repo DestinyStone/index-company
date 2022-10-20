@@ -2,6 +2,7 @@
   <div class="bar-title-select" @mouseout="handlermouseOver">
     <div v-for="(item, index) in data" ref="item"
          :key="'bar' + index" class="item"
+         style="white-space: nowrap; display: flex; justify-content: space-around; width: 100%;"
          :class="{'select-item': activeIndex === index}"
          @click="handlerClick(item)"
          @mouseenter="handlerMouseEnterItem(item, index)">
@@ -10,6 +11,7 @@
            :style="{
            'height': activeIndex === index ? (item.height ? item.height + 'px' : (childrenItemHeight * (item.children || []).length + 'px')) : '0',
            'left': (item.left || 0) + 'px',
+           'top' : '80px'
            }">
         <div ref="item-children"
              :style="{ 'height': activeIndex === index ? (item.height ? item.height + 'px' : 'auto') : 'auto',}"
@@ -19,9 +21,9 @@
              @click.stop="handlerClick(item, childrenItem)"
              @mousemove="isOver = false"
              @mouseenter.stop="handlerMouseEnterChildrenItem(childrenItem, childrenIndex, item)">
-          <div v-if="childrenItem.slot === undefined || !childrenItem.slot">
-            <div style="width: 3px; background: #409EFF"></div>
-            {{childrenItem.title}}
+          <div v-if="childrenItem.slot === undefined || !childrenItem.slot" >
+            <div style="width: 3px; background: #409EFF;"></div>
+            <div>{{childrenItem.title}}</div>
           </div>
           <div v-if="childrenItem.slot" style="height: 300px">
             <slot :name="childrenItem.key"/>
@@ -108,7 +110,7 @@
     text-align: center;
   }
   .bar-title-select .item {
-    padding: 0 50px;
+    padding: 0 18px;
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;

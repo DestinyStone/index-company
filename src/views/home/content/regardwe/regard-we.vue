@@ -41,7 +41,7 @@
         <div>
           <el-row>
             <el-col :span="10">
-              <el-card :style="{'height': journalHeight - 10 + 'px'}" style="cursor: pointer;" @click.native="handlerClickJournal(mainJournalData)">
+              <el-card :style="{'height': journalHeight + 'px'}" style="cursor: pointer;" @click.native="handlerClickJournal(mainJournalData)">
                 <div style="padding: 5px;">
                   <el-image :src="mainJournalData.imgSrc"></el-image>
                   <div>
@@ -53,17 +53,17 @@
               </el-card>
             </el-col>
             <el-col :span="14">
-              <div class="regard-we-journal-card" ref="journalCardItem" style="padding-left: 30px;">
+              <div class="regard-we-journal-card" style="padding-left: 30px;">
                 <div v-for="item in journalData"  style="padding-bottom: 10px;">
                   <el-card @click.native="handlerClickJournal(item)"  style="cursor: pointer;">
-                   <div style="display: flex; justify-content: space-between;">
+                   <div style="display: flex; justify-content: space-between;"  ref="journalCardItem">
                      <div style="display: flex;">
                        <div>
                          <el-image style="height: 90px;" :src="item.imgSrc"/>
                        </div>
                        <div style="display: flex; justify-content: center; flex-flow: column;">
                          <div style="padding-left: 50px;">
-                           <div style="font-size: 18px; color: #101010;">{{item.title}}</div>
+                           <div style="font-size: 18px; color: #101010; ">{{item.title}}</div>
                            <div style="font-size: 14px; color: #808080; margin-top: 15px;">摘要内容: {{item.mainContent}}</div>
                          </div>
                        </div>
@@ -99,8 +99,8 @@
                 <div>薪资福利: {{item.money}}</div>
                 <div>更新时间: {{item.updateTime}}</div>
               </div>
-              <div  v-if="item.isOpen === 1">
-                <pre>{{item.detailContent}}</pre>
+              <div  v-if="item.isOpen === 1" style="padding: 15px 0;">
+                <div style="font-size: 14px; line-height: 18px; min-height: 18px;" v-for="(contentItem, contentIndex) in item.detailContent.split('\n')" :key="contentIndex">{{contentItem}}</div>
               </div>
             </div>
           </div>
@@ -290,7 +290,11 @@
         this.$set(item, 'isOpen', status);
       },
       getJournalHeight() {
-        this.journalHeight = this.$refs['journalCardItem'].offsetHeight;
+        let height = 0;
+        for(let item of this.$refs['journalCardItem']) {
+          height += item.offsetHeight;
+        }
+        this.journalHeight = height + 100;
       },
       getImageUrl(url) {
         return getImageUrl(url);

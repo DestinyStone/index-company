@@ -12,8 +12,8 @@
                   <div style="font-size: 25px; font-weight: 700; margin-top: 20px;">{{childrenItem.title}}</div>
                 </div>
               </div>
-              <div class="product-solve-content" :class="{'product-solve-content-active': activeIndex === index}" style="padding: 0 25px; line-height: 25px; position:absolute;" :style="{top: height / 2 - 50 + 'px'}">
-                <div style="font-size: 18px; line-height: 30px">{{childrenItem.content}}</div>
+              <div class="product-solve-content" :class="{'product-solve-content-active': activeIndex === index}" style="padding: 0 25px; line-height: 25px; position:absolute;" :style="{top: height / 2 - 50 + 'px', fontSize: fontSize + 'px'}">
+                <div :style="{lineHeight: lineHeight + 'px'}">{{childrenItem.content}}</div>
                 <div style="display: flex; justify-content: center; margin-top: 30px;">
                   <div class="concat-button">
                     了解更多
@@ -44,6 +44,8 @@
     components: {CSvg, IndexItemContainer},
     data() {
       return {
+        lineHeight: 30,
+        fontSize: 18,
         activeIndex: -1,
         height: 0,
         data: [
@@ -81,8 +83,11 @@
     methods: {
       getHeight() {
         let solve = this.$refs['solveItem'] &&  this.$refs['solveItem'][0] || {};
-        console.log(solve.offsetWidth);
-        this.height = solve.offsetWidth * 2;
+        this.height = solve.offsetWidth * 2 < 500 ? 500 : solve.offsetWidth * 2;
+        if (this.height < 800) {
+          this.fontSize = 14;
+          this.lineHeight = 20;
+        }
       },
       getBackground(url) {
         return `background-image: url('${getImageUrl(url)}');`

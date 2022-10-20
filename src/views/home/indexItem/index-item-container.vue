@@ -1,6 +1,6 @@
 <template>
   <div class="index-item-container" :style="{background: background}">
-    <div style="width: 70%">
+    <div style="width: 70%" @mouseleave.stop="handlerMouseOutContent">
       <div style="padding-top: 30px;">
         <div class="title-text" style="font-size: 20px; color:#666;" v-if="minTitlePosition === 'top'">{{minTitle}}</div>
         <div class="title-text" style="font-size: 30px; font-weight: 700">{{title}}</div>
@@ -34,6 +34,11 @@
     data() {
       return {
 
+      }
+    },
+    methods: {
+      handlerMouseOutContent() {
+        this.$emit("mouseOutContent");
       }
     }
   }

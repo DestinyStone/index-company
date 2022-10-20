@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div  style="min-width: 1200px;">
     <bar>
-      <div slot="title" style="font-size: 20px; font-weight: 700; display: flex; flex-flow: column; justify-content: center;">
-        <div style="display: flex; margin-top: 15px;">
-          <el-image style="width: 50px; height: 50px;" :src="getImageUrl('/home/v2_rihkmy.png')"/>
-          <div style="line-height: 50px; height: 50px; margin-left: 20px;">星微联LonglinDB</div>
+      <div slot="title" style="display: flex; justify-content: center;">
+        <div  style="font-size: 20px; font-weight: 700; display: flex; flex-flow: column; justify-content: center;">
+          <div style="display: flex; margin-top: 15px;">
+            <el-image style="width: 50px; height: 50px;" :src="getImageUrl('/home/v2_rihkmy.png')"/>
+            <div style="line-height: 50px; height: 50px; margin-left: 20px; white-space: nowrap">星微联LonglinDB</div>
+          </div>
         </div>
       </div>
       <div slot="content">
@@ -51,7 +53,7 @@
         </bar-title-select>
       </div>
       <div slot="phone">
-        <div>
+        <div style="white-space: nowrap">
           <i class="el-icon-phone" style="font-size: 20px;"/>
           全国服务热线电话: 15012345678(同微信号)
         </div>

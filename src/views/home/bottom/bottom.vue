@@ -2,8 +2,8 @@
   <div style="width: 100%; height: 500px; background: #000431; color: #ffffff; display: flex; justify-content: center;">
     <div style="width: 80%; height: 500px; position: relative">
       <div style="padding-top: 60px;">
-        <el-row>
-          <el-col :span="6">
+        <div style="display: flex; justify-content: space-between;">
+          <div>
             <div style="display: flex;">
               <div>
                 <el-image style="width: 50px" :src="getImageUrl('/home/v2_rihkmy.png')"/>
@@ -18,8 +18,8 @@
                 {{item.title}}: {{item.content}}
               </div>
             </div>
-          </el-col>
-          <el-col :span="18">
+          </div>
+          <div style="min-width: 700px;">
             <div style="display: flex; justify-content: space-around;">
               <div v-for="(item, index) in selectData" :key="'item' + index">
                 <div style="font-size: 20px; margin-bottom: 8px; cursor: pointer;">{{item.title}}</div>
@@ -32,8 +32,8 @@
                 </div>
               </div>
             </div>
-          </el-col>
-        </el-row>
+          </div>
+        </div>
       </div>
       <div style="border-top: 1px solid #c6c6c6; position: absolute; bottom: 0; width: 100%; padding: 30px; text-align: center;">
         <el-row>

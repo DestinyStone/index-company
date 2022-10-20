@@ -1,22 +1,18 @@
 <template>
   <div>
     <div class="bar">
-      <div style="width: 80%;">
-        <el-row style="width: 100%">
-          <el-col :span="5" class="center">
-            <div>
-              <slot name="title"/>
-            </div>
-          </el-col>
-          <el-col :span="14" class="center">
-            <div style="min-width: 1200px;">
-              <slot name="content"/>
-            </div>
-          </el-col>
-          <el-col :span="5" class="center">
+      <div :style="{width: width + 'px'}">
+        <div style="display: flex; justify-content: space-around;">
+          <div ref="title">
+            <slot name="title"/>
+          </div>
+          <div ref="content" :style="{width: contentWidth + 'px'}">
+            <slot name="content"/>
+          </div>
+          <div ref="phone">
             <slot name="phone"/>
-          </el-col>
-        </el-row>
+          </div>
+        </div>
       </div>
     </div>
     <div style="height: 80px;"></div>
@@ -25,7 +21,26 @@
 
 <script>
   export default {
-    name: "bar"
+    name: "bar",
+    data() {
+      return {
+        width: 0,
+        contentWidth: 0,
+      }
+    },
+    methods: {
+      setWidth() {
+        this.width = window.innerWidth;
+      },
+      setContentTitle() {
+        let contentWidth = window.innerWidth - (this.$refs['title'].offsetWidth + this.$refs['phone'].offsetWidth) - 100;
+        this.contentWidth = contentWidth > 1000 ? 1000: contentWidth;
+      }
+    },
+    mounted() {
+      this.setWidth();
+      this.setContentTitle();
+    }
   }
 </script>
 

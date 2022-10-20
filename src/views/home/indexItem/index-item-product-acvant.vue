@@ -3,8 +3,8 @@
     <div slot="content">
       <el-row v-for="(item, index) in userData" :key="'acvant' + index">
         <el-col :span="12" v-for="(childrenItem, childrenIndex) in item" :key="'acvantChildren' + childrenIndex" style="padding: 10px 15px;">
-          <el-card>
-            <div style="border-radius: 10px; padding: 20px; display: flex;">
+          <el-card >
+            <div style="border-radius: 10px; padding: 20px; display: flex;" ref="itemContent" :style="{height: contentHeight === 0 ? 'unset' : contentHeight + 'px'}">
               <div style="padding-right: 20px;">
                 <el-image style="width: 100px" :src="childrenItem.src"/>
               </div>
@@ -28,6 +28,7 @@
     components: {IndexItemContainer},
     data() {
       return {
+        contentHeight: 0,
         data: [
           {
             title: "差动引擎",
@@ -59,6 +60,23 @@
         }
         return [];
       }
+    },
+    methods: {
+      init() {
+        this.setContentHeight();
+      },
+      setContentHeight() {
+        setTimeout(() => {
+          let height = 0;
+          for(let item of this.$refs['itemContent']) {
+            height = item.offsetHeight > height ? item.offsetHeight : height;
+          }
+          this.contentHeight = height - 50;
+        }, 30);
+      }
+    },
+    mounted() {
+      this.init();
     }
   }
 </script>

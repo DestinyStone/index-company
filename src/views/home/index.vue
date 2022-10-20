@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-width: 1200px;">
     <index-bar :data="barData" @change="handlerChangeBar"/>
     <carousel/>
     <index-content
@@ -28,6 +28,7 @@
       Carousel, IndexBar},
     data() {
       return {
+        oldParent: {},
         clickItems: [],
         titleBarData: [],
         isShowBar: false,
@@ -136,6 +137,11 @@
         this.contentKey = "/nows";
       },
       handlerChangeBar(data) {
+        if (this.oldParent !== data.parent) {
+          window.scrollTo(0, 0);
+          this.oldParent = data.parent;
+        }
+
         this.clickItems.splice(0, this.clickItems.length);
         this.clickItems.push(data.parent);
         if (data.children) {
