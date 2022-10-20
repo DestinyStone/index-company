@@ -57,13 +57,13 @@
             backgroundSrc: "/home/v2_rijw6x.png",
           }, {
             svgType: "concat",
-            title: "实时交易",
+            title: "物联网",
             content: "物联网在工业行业里形成了新的产业需求， 新的多模包括了数据的采集与展示， 基础的数据分析与管理， 深度数据分析与应用， 工业控制。",
             buttonText: "了解更多>>",
             backgroundSrc: "/home/v2_rijx78.png",
           }, {
             svgType: "app",
-            title: "实时交易",
+            title: "数据智能",
             content: "轻量级高性能OLTP与OLAP引擎可以替换一部分依赖重量级的消息，大数据生态的流批一体数据智能生态。",
             buttonText: "了解更多>>",
             backgroundSrc: "/home/v2_rijxl0.png",
